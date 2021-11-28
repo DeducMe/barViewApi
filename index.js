@@ -316,7 +316,7 @@ async function connectToDatabase() {
     console.log(`Table Hours created`);
   });
 
-  const sqlOrganizationMenu = `CREATE TABLE organizationMenu (id VARCHAR(255) UNIQUE, category VARCHAR(255), title VARCHAR(255), image VARCHAR(255), description VARCHAR(255), price VARCHAR(255))`;
+  const sqlOrganizationMenu = `CREATE TABLE organizationMenu (id VARCHAR(255), category VARCHAR(255), title VARCHAR(255), image VARCHAR(255), description VARCHAR(255), price VARCHAR(255))`;
   conn.query(sqlOrganizationMenu, function (err, result) {
     if (err) {
       if (err.code === "42P07") console.log(`table Menu already exist`);
