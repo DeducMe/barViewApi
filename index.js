@@ -103,7 +103,7 @@ function putMenu(sendBack, data) {
   create type s as (id BIGINT, category VARCHAR(255), title VARCHAR(255), image VARCHAR(255), description VARCHAR(255), price VARCHAR(255));
   UPDATE organizationMenu
   SET id=s.id, category=s.category, title=s.title, image=s.image, description=s.description, price=s.price
-  from unnest(array[%L]::s[]) 
+  from unnest(array[%L]::s[]) as s
   WHERE organizationMenu.id = s.id`,
     data
   );
