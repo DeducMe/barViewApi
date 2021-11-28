@@ -85,12 +85,41 @@ function getCoords(sendBack) {
 }
 
 function postMenu(sendBack, data) {
+  const sql = `SELECT id from organizationMenu WHERE id=${data.id}`;
+  conn.query(sql, function (err, result) {
+    if (result?.length > 0) {
+      console.log(`put menu`, data.id);
+      putMenu(sendBack, data);
+    } else {
+      console.log(`insert menu`, data.id);
+      insertMenu(sendBack, data);
+    }
+  });
+}
+
+function putMenu(sendBack, data) {
+  const sql = format(
+    `
+  UPDATE organizationMenu
+  SET id=s.id, category=s.category, title=s.title, image=s.image, description=s.description, price=s.price
+  from unnest(array[%L]) s (id VARCHAR(255), category VARCHAR(255), title VARCHAR(255), image VARCHAR(255), description VARCHAR(255), price VARCHAR(255))
+  WHERE organizationMenu.id = s.id`,
+    data
+  );
+  conn.query(sql, sqlQueryData, function (err, result) {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    sendBack(err, result);
+  });
+}
+
+function insertMenu(sendBack, data) {
   const sql = format(
     `INSERT INTO organizationMenu (id, category, title, image, description, price) VALUES %L`,
     data
   );
-
-  console.log(sql);
 
   conn.query(sql, function (err, result) {
     if (err) {
