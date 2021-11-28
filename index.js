@@ -90,6 +90,8 @@ function postMenu(sendBack, data) {
     data
   );
 
+  console.log(sql);
+
   conn.query(sql, function (err, result) {
     if (err) {
       console.log(err);
