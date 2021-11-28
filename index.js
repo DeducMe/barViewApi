@@ -60,7 +60,7 @@ function reciever(req, res, func) {
 }
 
 function getOrganizationInfo(sendBack, data, requestParams) {
-  const sql = `SELECT name, address, url, phones, categories, rating, logo, menuFeatures, elseFeatures, organizationImages, menuPositions, userReviews, reviewsCategories,
+  const sql = `SELECT name, address, url, phones, categories, rating, logo, menuFeatures, elseFeatures, organizationImages, userReviews, reviewsCategories,
   organizationHours.id, organizationHours.text, organizationHours.Everyday, organizationHours.Monday, organizationHours.Tuesday, organizationHours.Wednesday, organizationHours.Thursday, organizationHours.Friday, organizationHours.Saturday, organizationHours.Sunday from organizations
   JOIN organizationHours ON organizations.id=${requestParams.id}::varchar AND organizationHours.id=${requestParams.id}::varchar`;
   conn.query(sql, function (err, result) {
@@ -95,9 +95,9 @@ function postMenu(sendBack, data) {
       price = excluded.price
   `;
 
-  data.forEach((item) => {
+  data.forEach((item, index) => {
+    console.log(index);
     const sqlQueryData = Object.values(item);
-    console.log(sqlQueryData);
     conn.query(sql, sqlQueryData, function (err, result) {
       if (err) {
         console.log(err);
@@ -165,7 +165,7 @@ function putOrganization(sendBack, data) {
     }
     return item;
   });
-  const sql = `UPDATE organizations SET coordinatesX = $1, coordinatesY = $2, name = $3, address = $4, id = $5, url = $6, phones = $7, categories = $8, rating = $9, logo = $10, menuFeatures = $11, elseFeatures = $12, organizationImages = $13, menuPositions = $14, userReviews = $15, reviewsCategories = $16 WHERE id=${data.id}`;
+  const sql = `UPDATE organizations SET coordinatesX = $1, coordinatesY = $2, name = $3, address = $4, id = $5, url = $6, phones = $7, categories = $8, rating = $9, logo = $10, menuFeatures = $11, elseFeatures = $12, organizationImages = $13, userReviews = $14, reviewsCategories = $15 WHERE id=${data.id}`;
   conn.query(sql, sqlQueryData, function (err, result) {
     if (err) {
       console.log(err);
@@ -182,7 +182,7 @@ function insertOrganization(sendBack, data) {
     }
     return item;
   });
-  const sql = `INSERT INTO organizations (coordinatesX, coordinatesY, name, address, id, url, phones, categories, rating, logo, menuFeatures, elseFeatures, organizationImages, menuPositions, userReviews, reviewsCategories) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)`;
+  const sql = `INSERT INTO organizations (coordinatesX, coordinatesY, name, address, id, url, phones, categories, rating, logo, menuFeatures, elseFeatures, organizationImages, userReviews, reviewsCategories) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)`;
   conn.query(sql, sqlQueryData, function (err, result) {
     if (err) {
       console.log(err);
@@ -228,6 +228,17 @@ async function getAllHours(sendBack) {
   });
 }
 
+function dropMenuDatabase() {
+  const sql = `DROP TABLE organizationMenu`;
+  conn.query(sql, function (err, result) {
+    if (err) {
+      if (err.errno === 1050) console.log(`table not destroyed`);
+      return;
+    }
+    console.log(`Table destroyed`);
+  });
+}
+
 function dropHoursDatabase() {
   const sql = `DROP TABLE organizationHours`;
   conn.query(sql, function (err, result) {
@@ -259,7 +270,7 @@ async function connectToDatabase() {
   console.log("Before connect");
   conn = await pool.connect();
   console.log("Connected!");
-  const sql = `CREATE TABLE organizations (name VARCHAR(255), address VARCHAR(255) UNIQUE, coordinatesX FLOAT, coordinatesY FLOAT, id VARCHAR(255), url VARCHAR(255), phones VARCHAR(255), categories VARCHAR(255),rating FLOAT, logo VARCHAR(255), menuFeatures TEXT, elseFeatures TEXT, organizationImages TEXT, menuPositions TEXT, userReviews TEXT, reviewsCategories TEXT)`;
+  const sql = `CREATE TABLE organizations (name VARCHAR(255), address VARCHAR(255), coordinatesX FLOAT, coordinatesY FLOAT, id VARCHAR(255), url VARCHAR(255), phones VARCHAR(255), categories VARCHAR(255),rating FLOAT, logo VARCHAR(255), menuFeatures TEXT, elseFeatures TEXT, organizationImages TEXT, userReviews TEXT, reviewsCategories TEXT)`;
   conn.query(sql, function (err, result) {
     if (err) {
       if (err.code === "42P07") console.log(`table already exist`);
@@ -269,7 +280,7 @@ async function connectToDatabase() {
     console.log(`Table created`);
   });
 
-  const sqlOrganizationHours = `CREATE TABLE organizationHours (id VARCHAR(255) UNIQUE, text VARCHAR(255), Everyday VARCHAR(255), Monday VARCHAR(255), Tuesday VARCHAR(255), Wednesday VARCHAR(255), Thursday VARCHAR(255), Friday VARCHAR(255), Saturday VARCHAR(255), Sunday VARCHAR(255))`;
+  const sqlOrganizationHours = `CREATE TABLE organizationHours (id VARCHAR(255), text VARCHAR(255), Everyday VARCHAR(255), Monday VARCHAR(255), Tuesday VARCHAR(255), Wednesday VARCHAR(255), Thursday VARCHAR(255), Friday VARCHAR(255), Saturday VARCHAR(255), Sunday VARCHAR(255))`;
   conn.query(sqlOrganizationHours, function (err, result) {
     if (err) {
       if (err.code === "42P07") console.log(`table Hours already exist`);
@@ -289,9 +300,9 @@ async function connectToDatabase() {
     console.log(`Table Menu created`);
   });
 }
-
-// setTimeout(() => {
-connectToDatabase();
-// }, 1000);
+dropDatabase();
+setTimeout(() => {
+  connectToDatabase();
+}, 1000);
 
 // main();
