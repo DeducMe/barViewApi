@@ -85,7 +85,7 @@ function getCoords(sendBack) {
 }
 
 function postMenu(sendBack, data) {
-  const sql = `SELECT id from organizationMenu WHERE id=${data.id}`;
+  const sql = `SELECT id from organizationMenu WHERE id=${data[0][0]}`;
   conn.query(sql, function (err, result) {
     if (result?.length > 0) {
       console.log(`put menu`, data.id);
