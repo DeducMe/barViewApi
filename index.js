@@ -124,7 +124,7 @@ function insertMenu(sendBack, data) {
 
   conn.query(sql, function (err, result) {
     if (err) {
-      console.log(err);
+      console.log(err, sql.slice(sql.length - 10, 0));
       return;
     }
     sendBack(err, result);
