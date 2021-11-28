@@ -89,10 +89,10 @@ function postMenu(sendBack, data) {
   ON CONFLICT (id) DO UPDATE 
     SET
       category = excluded.category, 
-      title = excluded.title;
-      image = excluded.image;
-      description = excluded.description;
-      price = excluded.price;
+      title = excluded.title,
+      image = excluded.image,
+      description = excluded.description,
+      price = excluded.price
   `;
 
   data.forEach((item) => {
