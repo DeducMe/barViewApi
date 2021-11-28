@@ -87,10 +87,14 @@ function postMenu(sendBack, data) {
   console.log(data.id);
 
   conn.query(sql, function (err, result) {
-    console.log(result, "resultMenu");
-
-    console.log(`insert menu`, data.id);
-    insertMenu(sendBack, data.menuPositions);
+    console.log(result);
+    if (result?.length > 0) {
+      console.log(`put menu`, data.id);
+      putMenu(sendBack, data.menuPositions);
+    } else {
+      console.log(`insert menu`, data.id);
+      insertMenu(sendBack, data.menuPositions);
+    }
   });
 }
 
@@ -132,7 +136,7 @@ function postHours(sendBack, data) {
   conn.query(sql, function (err, result) {
     console.log(result, "result");
 
-    if (!result) {
+    if (result?.length > 0) {
       console.log(`put hours`, data.id);
       putHours(sendBack, data);
     } else {
@@ -169,7 +173,7 @@ function insertHours(sendBack, data) {
 function postOrganization(sendBack, data) {
   const sql = `SELECT id from organizations WHERE id=${data.id}`;
   conn.query(sql, function (err, result) {
-    if (!result) {
+    if (result?.length > 0) {
       console.log(`put org`, data.id);
       putOrganization(sendBack, data);
     } else {
