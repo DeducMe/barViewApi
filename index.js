@@ -133,8 +133,6 @@ function insertMenu(sendBack, data) {
 function postHours(sendBack, data) {
   const sql = `SELECT id from organizationHours WHERE organizationHours.id=${data.id}`;
   conn.query(sql, function (err, result) {
-    console.log(result, "result");
-
     if (result?.rows.length > 0) {
       console.log(`put hours`, data.id);
       putHours(sendBack, data);
