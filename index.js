@@ -87,6 +87,9 @@ function postMenu(sendBack, data) {
   console.log(sql);
 
   conn.query(sql, function (err, result) {
+    if (err) {
+      console.log(err);
+    }
     console.log(result);
     if (result?.length > 0) {
       console.log(`put menu`, data.id);
