@@ -83,8 +83,8 @@ function getCoords(sendBack) {
 }
 
 function postMenu(sendBack, data) {
-  const sql = `SELECT id from organizationMenu WHERE id=${data.id}`;
-  console.log(data.id);
+  const sql = `SELECT id from organizationMenu WHERE organizationMenu.id=${data.id}`;
+  console.log(sql);
 
   conn.query(sql, function (err, result) {
     console.log(result);
