@@ -86,16 +86,7 @@ function getCoords(sendBack) {
 
 function postMenu(sendBack, data) {
   const sql = format(
-    `INSERT INTO organizationMenu (id, category, title, image, description, price) 
-  VALUES %L 
-  ON CONFLICT (id) DO UPDATE 
-    SET
-      category = excluded.category, 
-      title = excluded.title,
-      image = excluded.image,
-      description = excluded.description,
-      price = excluded.price
-  `,
+    `INSERT INTO organizationMenu (id, category, title, image, description, price) VALUES %L`,
     data
   );
 
