@@ -97,6 +97,7 @@ function postMenu(sendBack, data) {
 
   data.forEach((item) => {
     const sqlQueryData = Object.values(item);
+    console.log(sqlQueryData);
     conn.query(sql, sqlQueryData, function (err, result) {
       if (err) {
         console.log(err);
