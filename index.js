@@ -228,9 +228,9 @@ async function getAllHours(sendBack) {
   });
 }
 
-function dropMenuDatabase() {
+async function dropMenuDatabase() {
   const sql = `DROP TABLE organizationMenu`;
-  conn.query(sql, function (err, result) {
+  await conn.query(sql, function (err, result) {
     if (err) {
       if (err.errno === 1050) console.log(`table not destroyed`);
       return;
@@ -239,9 +239,9 @@ function dropMenuDatabase() {
   });
 }
 
-function dropHoursDatabase() {
+async function dropHoursDatabase() {
   const sql = `DROP TABLE organizationHours`;
-  conn.query(sql, function (err, result) {
+  await conn.query(sql, function (err, result) {
     if (err) {
       if (err.errno === 1050) console.log(`table not destroyed`);
       return;
@@ -250,9 +250,9 @@ function dropHoursDatabase() {
   });
 }
 
-function dropDatabase() {
+async function dropDatabase() {
   const sql = `DROP TABLE organizations`;
-  conn.query(sql, function (err, result) {
+  await conn.query(sql, function (err, result) {
     if (err) {
       if (err.errno === 1050) console.log(`table not destroyed`);
       return;
@@ -271,6 +271,8 @@ async function connectToDatabase() {
   conn = await pool.connect();
   console.log("Connected!");
   dropDatabase();
+  dropHoursDatabase();
+  dropMenuDatabase();
 
   const sql = `CREATE TABLE organizations (name VARCHAR(255), address VARCHAR(255), coordinatesX FLOAT, coordinatesY FLOAT, id VARCHAR(255), url VARCHAR(255), phones VARCHAR(255), categories VARCHAR(255),rating FLOAT, logo VARCHAR(255), menuFeatures TEXT, elseFeatures TEXT, organizationImages TEXT, userReviews TEXT, reviewsCategories TEXT)`;
   conn.query(sql, function (err, result) {
