@@ -294,6 +294,9 @@ async function connectToDatabase() {
   console.log("Before connect");
   conn = await pool.connect();
   console.log("Connected!");
+  dropDatabase();
+  dropHoursDatabase();
+  dropMenuDatabase();
 
   const sql = `CREATE TABLE organizations (name VARCHAR(255), address VARCHAR(255), coordinatesX FLOAT, coordinatesY FLOAT, id BIGINT, url VARCHAR(255), phones VARCHAR(255), categories VARCHAR(255),rating FLOAT, logo VARCHAR(255), menuFeatures TEXT, elseFeatures TEXT, organizationImages TEXT, userReviews TEXT, reviewsCategories TEXT)`;
   conn.query(sql, function (err, result) {
