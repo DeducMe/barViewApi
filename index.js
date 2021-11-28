@@ -100,7 +100,7 @@ function postMenu(sendBack, data) {
 function putMenu(sendBack, data) {
   const sql = format(
     `
-  create type s as (id BIGINT, category VARCHAR(255), title VARCHAR(255), image VARCHAR(255), description VARCHAR(255), price VARCHAR(255));
+  
   UPDATE organizationMenu
   SET id=s.id, category=s.category, title=s.title, image=s.image, description=s.description, price=s.price
   from unnest(array[%L]::s[]) as s
@@ -297,6 +297,10 @@ async function connectToDatabase() {
   // dropHoursDatabase();
   // dropMenuDatabase();
 
+  conn.query(
+    "create type s as (id BIGINT, category VARCHAR(255), title VARCHAR(255), image VARCHAR(255), description VARCHAR(255), price VARCHAR(255));",
+    function (err, result) {}
+  );
   const sql = `CREATE TABLE organizations (name VARCHAR(255), address VARCHAR(255), coordinatesX FLOAT, coordinatesY FLOAT, id BIGINT, url VARCHAR(255), phones VARCHAR(255), categories VARCHAR(255),rating FLOAT, logo VARCHAR(255), menuFeatures TEXT, elseFeatures TEXT, organizationImages TEXT, userReviews TEXT, reviewsCategories TEXT)`;
   conn.query(sql, function (err, result) {
     if (err) {
