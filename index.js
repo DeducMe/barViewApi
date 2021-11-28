@@ -85,14 +85,14 @@ function getCoords(sendBack) {
 }
 
 function postMenu(sendBack, data) {
-  const sql = `SELECT id from organizationMenu WHERE id=${data[0][0]}`;
+  const sql = `SELECT id from organizationMenu WHERE id=${data.id}`;
   conn.query(sql, function (err, result) {
     if (result?.length > 0) {
       console.log(`put menu`, data.id);
-      putMenu(sendBack, data);
+      putMenu(sendBack, data.menuPositions);
     } else {
       console.log(`insert menu`, data.id);
-      insertMenu(sendBack, data);
+      insertMenu(sendBack, data.menuPositions);
     }
   });
 }
