@@ -85,6 +85,7 @@ function getCoords(sendBack) {
 function postMenu(sendBack, data) {
   const sql = `SELECT id from organizationMenu WHERE id=${data.id}`;
   conn.query(sql, function (err, result) {
+    console.log(result);
     if (result?.length > 0) {
       console.log(`put menu`, data.id);
       putMenu(sendBack, data.menuPositions);
@@ -131,6 +132,8 @@ function insertMenu(sendBack, data) {
 function postHours(sendBack, data) {
   const sql = `SELECT id from organizationHours WHERE id=${data.id}`;
   conn.query(sql, function (err, result) {
+    console.log(result);
+
     if (result?.length > 0) {
       console.log(`put hours`, data.id);
       putHours(sendBack, data);
@@ -290,9 +293,9 @@ async function connectToDatabase() {
   console.log("Before connect");
   conn = await pool.connect();
   console.log("Connected!");
-  dropDatabase();
-  dropHoursDatabase();
-  dropMenuDatabase();
+  // dropDatabase();
+  // dropHoursDatabase();
+  // dropMenuDatabase();
 
   const sql = `CREATE TABLE organizations (name VARCHAR(255), address VARCHAR(255), coordinatesX FLOAT, coordinatesY FLOAT, id VARCHAR(255), url VARCHAR(255), phones VARCHAR(255), categories VARCHAR(255),rating FLOAT, logo VARCHAR(255), menuFeatures TEXT, elseFeatures TEXT, organizationImages TEXT, userReviews TEXT, reviewsCategories TEXT)`;
   conn.query(sql, function (err, result) {
