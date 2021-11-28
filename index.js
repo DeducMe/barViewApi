@@ -101,7 +101,7 @@ function putMenu(sendBack, data) {
     `
   UPDATE organizationMenu
   SET id=s.id, category=s.category, title=s.title, image=s.image, description=s.description, price=s.price
-  from unnest(array[%L]) s (id BIGINT, category VARCHAR(255), title VARCHAR(255), image VARCHAR(255), description VARCHAR(255), price VARCHAR(255))
+  from unnest(array[%L]) s (id, category, title, image, description, price)
   WHERE organizationMenu.id = s.id`,
     data
   );
@@ -317,7 +317,7 @@ async function connectToDatabase() {
     console.log(`Table Hours created`);
   });
 
-  const sqlOrganizationMenu = `CREATE TABLE organizationMenu (id BIGINT, category VARCHAR(255), title VARCHAR(255), image VARCHAR(255), description VARCHAR(255), price VARCHAR(255))`;
+  const sqlOrganizationMenu = `CREATE TABLE organizationMenu (id VARCHAR(255), category VARCHAR(255), title VARCHAR(255), image VARCHAR(255), description VARCHAR(255), price VARCHAR(255))`;
   conn.query(sqlOrganizationMenu, function (err, result) {
     if (err) {
       if (err.code === "42P07") console.log(`table Menu already exist`);
