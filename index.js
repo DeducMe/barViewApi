@@ -87,10 +87,6 @@ function postMenu(sendBack, data) {
   console.log(sql);
 
   conn.query(sql, function (err, result) {
-    if (err) {
-      console.log(err);
-    }
-    console.log(result);
     if (result?.length > 0) {
       console.log(`put menu`, data.id);
       putMenu(sendBack, data.menuPositions);
@@ -135,7 +131,7 @@ function insertMenu(sendBack, data) {
 }
 
 function postHours(sendBack, data) {
-  const sql = `SELECT id from organizationHours WHERE id=${data.id}`;
+  const sql = `SELECT id from organizationHours WHERE organizationHours.id=${data.id}`;
   conn.query(sql, function (err, result) {
     console.log(result, "result");
 
@@ -151,7 +147,7 @@ function postHours(sendBack, data) {
 
 function putHours(sendBack, data) {
   const sqlQueryData = Object.values(data);
-  const sql = `UPDATE organizationHours SET id = $1, text = $2, Everyday = $3, Monday = $4, Tuesday = $5, Wednesday = $6, Thursday = $7, Friday = $8, Saturday = $9, Sunday = $10 WHERE id=${data.id}`;
+  const sql = `UPDATE organizationHours SET id = $1, text = $2, Everyday = $3, Monday = $4, Tuesday = $5, Wednesday = $6, Thursday = $7, Friday = $8, Saturday = $9, Sunday = $10 WHERE organizationHours.id=${data.id}`;
   conn.query(sql, sqlQueryData, function (err, result) {
     if (err) {
       console.log(err);
@@ -174,7 +170,7 @@ function insertHours(sendBack, data) {
 }
 
 function postOrganization(sendBack, data) {
-  const sql = `SELECT id from organizations WHERE id=${data.id}`;
+  const sql = `SELECT id from organizations WHERE organizations.id=${data.id}`;
   conn.query(sql, function (err, result) {
     if (result?.length > 0) {
       console.log(`put org`, data.id);
@@ -193,7 +189,7 @@ function putOrganization(sendBack, data) {
     }
     return item;
   });
-  const sql = `UPDATE organizations SET coordinatesX = $1, coordinatesY = $2, name = $3, address = $4, id = $5, url = $6, phones = $7, categories = $8, rating = $9, logo = $10, menuFeatures = $11, elseFeatures = $12, organizationImages = $13, userReviews = $14, reviewsCategories = $15 WHERE id=${data.id}`;
+  const sql = `UPDATE organizations SET coordinatesX = $1, coordinatesY = $2, name = $3, address = $4, id = $5, url = $6, phones = $7, categories = $8, rating = $9, logo = $10, menuFeatures = $11, elseFeatures = $12, organizationImages = $13, userReviews = $14, reviewsCategories = $15 WHERE organizations.id=${data.id}`;
   conn.query(sql, sqlQueryData, function (err, result) {
     if (err) {
       console.log(err);
