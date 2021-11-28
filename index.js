@@ -44,8 +44,6 @@ let conn;
 let pool = new Pool(dbConfig);
 
 function reciever(req, res, func) {
-  console.log(req.params, "reciever params");
-
   func(
     (err, data) => {
       if (err)
