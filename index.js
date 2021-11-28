@@ -86,7 +86,7 @@ function postMenu(sendBack, data) {
   const sql = `SELECT id from organizationMenu WHERE id=${data.id}`;
   conn.query(sql, function (err, result) {
     console.log(result);
-    if (result?.length > 0) {
+    if (!result) {
       console.log(`put menu`, data.id);
       putMenu(sendBack, data.menuPositions);
     } else {
@@ -132,9 +132,9 @@ function insertMenu(sendBack, data) {
 function postHours(sendBack, data) {
   const sql = `SELECT id from organizationHours WHERE id=${data.id}`;
   conn.query(sql, function (err, result) {
-    console.log(result);
+    console.log(result, "result");
 
-    if (result?.length > 0) {
+    if (!result) {
       console.log(`put hours`, data.id);
       putHours(sendBack, data);
     } else {
@@ -171,7 +171,7 @@ function insertHours(sendBack, data) {
 function postOrganization(sendBack, data) {
   const sql = `SELECT id from organizations WHERE id=${data.id}`;
   conn.query(sql, function (err, result) {
-    if (result?.length > 0) {
+    if (!result) {
       console.log(`put org`, data.id);
       putOrganization(sendBack, data);
     } else {
