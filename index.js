@@ -61,7 +61,7 @@ function reciever(req, res, func) {
 function getOrganizationInfo(sendBack, data, requestParams) {
   const sql = `SELECT name, address, url, phones, categories, rating, logo, menuFeatures, elseFeatures, organizationImages, userReviews, reviewsCategories,
   organizationHours.id, organizationHours.text, organizationHours.Everyday, organizationHours.Monday, organizationHours.Tuesday, organizationHours.Wednesday, organizationHours.Thursday, organizationHours.Friday, organizationHours.Saturday, organizationHours.Sunday from organizations
-  JOIN organizationHours ON organizations.id=${requestParams.id}::varchar AND organizationHours.id=${requestParams.id}::varchar`;
+  JOIN organizationHours ON organizations.id=${requestParams.id} AND organizationHours.id=${requestParams.id}`;
   conn.query(sql, function (err, result) {
     if (err) {
       console.log(err);
@@ -298,11 +298,8 @@ async function connectToDatabase() {
   console.log("Before connect");
   conn = await pool.connect();
   console.log("Connected!");
-  dropDatabase();
-  dropHoursDatabase();
-  dropMenuDatabase();
 
-  const sql = `CREATE TABLE organizations (name VARCHAR(255), address VARCHAR(255), coordinatesX FLOAT, coordinatesY FLOAT, id VARCHAR(255), url VARCHAR(255), phones VARCHAR(255), categories VARCHAR(255),rating FLOAT, logo VARCHAR(255), menuFeatures TEXT, elseFeatures TEXT, organizationImages TEXT, userReviews TEXT, reviewsCategories TEXT)`;
+  const sql = `CREATE TABLE organizations (name VARCHAR(255), address VARCHAR(255), coordinatesX FLOAT, coordinatesY FLOAT, id BIGINT, url VARCHAR(255), phones VARCHAR(255), categories VARCHAR(255),rating FLOAT, logo VARCHAR(255), menuFeatures TEXT, elseFeatures TEXT, organizationImages TEXT, userReviews TEXT, reviewsCategories TEXT)`;
   conn.query(sql, function (err, result) {
     if (err) {
       if (err.code === "42P07") console.log(`table already exist`);
@@ -312,7 +309,7 @@ async function connectToDatabase() {
     console.log(`Table created`);
   });
 
-  const sqlOrganizationHours = `CREATE TABLE organizationHours (id VARCHAR(255), text VARCHAR(255), Everyday VARCHAR(255), Monday VARCHAR(255), Tuesday VARCHAR(255), Wednesday VARCHAR(255), Thursday VARCHAR(255), Friday VARCHAR(255), Saturday VARCHAR(255), Sunday VARCHAR(255))`;
+  const sqlOrganizationHours = `CREATE TABLE organizationHours (id BIGINT, text VARCHAR(255), Everyday VARCHAR(255), Monday VARCHAR(255), Tuesday VARCHAR(255), Wednesday VARCHAR(255), Thursday VARCHAR(255), Friday VARCHAR(255), Saturday VARCHAR(255), Sunday VARCHAR(255))`;
   conn.query(sqlOrganizationHours, function (err, result) {
     if (err) {
       if (err.code === "42P07") console.log(`table Hours already exist`);
