@@ -2,6 +2,7 @@ const { Pool } = require("pg");
 require("dotenv").config();
 const express = require(`express`);
 const bodyParser = require(`body-parser`);
+const format = require("pg-format");
 
 const port = process.env.PORT || 8443;
 
@@ -84,8 +85,9 @@ function getCoords(sendBack) {
 }
 
 function postMenu(sendBack, data) {
-  const sql = `INSERT INTO organizationMenu (id, category, title, image, description, price) 
-  VALUES ($1, $2, $3, $4, $5, $6)
+  const sql = format(
+    `INSERT INTO organizationMenu (id, category, title, image, description, price) 
+  VALUES %L 
   ON CONFLICT (id) DO UPDATE 
     SET
       category = excluded.category, 
@@ -93,18 +95,16 @@ function postMenu(sendBack, data) {
       image = excluded.image,
       description = excluded.description,
       price = excluded.price
-  `;
+  `,
+    data
+  );
 
-  data.forEach((item, index) => {
-    const sqlQueryData = Object.values(item);
-    console.log(item);
-    conn.query(sql, sqlQueryData, function (err, result) {
-      if (err) {
-        console.log(err);
-        return;
-      }
-      sendBack(err, result);
-    });
+  conn.query(sql, sqlQueryData, function (err, result) {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    sendBack(err, result);
   });
 }
 
