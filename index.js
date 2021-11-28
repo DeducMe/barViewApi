@@ -99,7 +99,7 @@ function postMenu(sendBack, data) {
     data
   );
 
-  conn.query(sql, sqlQueryData, function (err, result) {
+  conn.query(sql, function (err, result) {
     if (err) {
       console.log(err);
       return;
