@@ -98,6 +98,8 @@ function getCoords(sendBack) {
 
 function postMenu(sendBack, data) {
   if (data.menuPositions.length === 0) {
+    console.log(data);
+
     sendBack({ message: "zero length" }, null);
     return;
   }
