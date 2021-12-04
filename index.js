@@ -97,6 +97,11 @@ function getCoords(sendBack) {
 }
 
 function postMenu(sendBack, data) {
+  if (data.length === 0) {
+    sendBack({ message: "zero length" }, null);
+    return;
+  }
+
   const sql = `SELECT id from organizationMenu WHERE organizationMenu.id=${data.id}`;
 
   conn.query(sql, function (err, result) {
@@ -137,11 +142,6 @@ function insertMenu(sendBack, data) {
 }
 
 function postHours(sendBack, data) {
-  if (data.length === 0) {
-    sendBack("zero length", null);
-    return;
-  }
-
   const sql = `SELECT id from organizationHours WHERE organizationHours.id=${data.id}`;
   conn.query(sql, function (err, result) {
     if (result?.rows.length > 0) {
