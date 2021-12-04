@@ -100,7 +100,6 @@ function postMenu(sendBack, data) {
   const sql = `SELECT id from organizationMenu WHERE organizationMenu.id=${data.id}`;
 
   conn.query(sql, function (err, result) {
-    console.log(data.menuPositions);
     if (result?.rows.length > 0) {
       console.log(`put menu`, data.id);
       putMenu(sendBack, data.menuPositions);
@@ -119,6 +118,7 @@ function putMenu(sendBack, data) {
     WHERE organizationMenu.id = s.id`,
     data
   );
+  console.log(sql);
   conn.query(sql, function (err, result) {
     if (err) {
       console.log(sql.slice(sql.length - 10, 0), err);
