@@ -116,7 +116,7 @@ function putMenu(sendBack, data) {
     SET id=s.id, category=s.category, title=s.title, image=s.image, description=s.description, price=s.price
     from(values %L)
     as s(id, category, title, image, description, price) 
-    WHERE organizationMenu.id = s.id`,
+    WHERE organizationMenu.id::BIGINT = s.id::BIGINT`,
     data
   );
   console.log(sql);
