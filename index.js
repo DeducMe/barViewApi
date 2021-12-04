@@ -97,20 +97,17 @@ function getCoords(sendBack) {
 }
 
 function postMenu(sendBack, data) {
-  if (data.length === 0) {
-    sendBack({ message: "zero length" }, null);
-    return;
-  }
+  console.log(data);
 
   const sql = `SELECT id from organizationMenu WHERE organizationMenu.id=${data.id}`;
 
   conn.query(sql, function (err, result) {
     if (result?.rows.length > 0) {
       console.log(`put menu`, data.id);
-      putMenu(sendBack, data.menuPositions, data.id);
+      putMenu(sendBack, data, data.id);
     } else {
       console.log(`insert menu`, data.id);
-      insertMenu(sendBack, data.menuPositions);
+      insertMenu(sendBack, data);
     }
   });
 }
