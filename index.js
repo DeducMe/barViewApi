@@ -62,7 +62,7 @@ function reciever(req, res, func) {
 }
 
 function getOrganizationMenu(sendBack, data, requestParams) {
-  const sql = `SELECT menuPositions from organizationMenu WHERE organizationMenu.id=${requestParams.id}`;
+  const sql = `SELECT * from organizationMenu WHERE organizationMenu.id=${requestParams.id}`;
   conn.query(sql, function (err, result) {
     if (err) {
       console.log(err);
