@@ -110,23 +110,15 @@ function postMenu(sendBack, data) {
   });
 }
 
-function putMenu(sendBack, data, id) {
-  const sql = format(
-    `UPDATE organizationMenu
-    SET id=s.id, category=s.category, title=s.title, image=s.image, description=s.description, price=s.price
-    from(values %L)
-    as s(id, category, title, image, description, price) 
-    WHERE organizationMenu.id = ${id}`,
-    data
-  );
-  console.log(sql);
-  conn.query(sql, function (err, result) {
+async function putMenu(sendBack, data, id) {
+  const sql = `DELETE FROM organizationMenu WHERE id = ${id}`;
+  await conn.query(sql, function (err, result) {
     if (err) {
       console.log(sql.slice(sql.length - 10, 0), err);
       return;
     }
-    sendBack(err, result);
   });
+  insertMenu(sendBack, data);
 }
 
 function insertMenu(sendBack, data) {
