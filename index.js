@@ -19,6 +19,9 @@ app.get(`/organization/coords`, (req, res) => reciever(req, res, getCoords));
 app.get(`/organization/info/:id`, (req, res) =>
   reciever(req, res, getOrganizationInfo)
 );
+app.get(`/organization/menu/:id`, (req, res) =>
+  reciever(req, res, getOrganizationMenu)
+);
 // app.get(`/organization/menu/:id`, (req, res) =>
 //   reciever(req, res, getOrganizationMenu)
 // );
@@ -56,6 +59,17 @@ function reciever(req, res, func) {
     req.body,
     req.params
   );
+}
+
+function getOrganizationMenu(sendBack, data, requestParams) {
+  const sql = `SELECT menuPositions from organizationMenu WHERE organizationMenu.id=${requestParams.id}`;
+  conn.query(sql, function (err, result) {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    sendBack(err, result);
+  });
 }
 
 function getOrganizationInfo(sendBack, data, requestParams) {
@@ -99,12 +113,10 @@ function postMenu(sendBack, data) {
 
 function putMenu(sendBack, data) {
   const sql = format(
-    `
-  
-  UPDATE organizationMenu
-  SET id=s.id, category=s.category, title=s.title, image=s.image, description=s.description, price=s.price
-  from unnest(array[%L]::s[]) as s
-  WHERE organizationMenu.id = s.id`,
+    `UPDATE organizationMenu
+    SET id=s.id, category=s.category, title=s.title, image=s.image, description=s.description, price=s.price
+    from unnest(array[%L]::s[]) as s
+    WHERE organizationMenu.id = s.id`,
     data
   );
   conn.query(sql, function (err, result) {
