@@ -114,7 +114,8 @@ function putMenu(sendBack, data) {
   const sql = format(
     `UPDATE organizationMenu
     SET id=s.id, category=s.category, title=s.title, image=s.image, description=s.description, price=s.price
-    from unnest(%L)
+    from unnest(values %L)
+    as s(id, category, title, image, description, price) 
     WHERE organizationMenu.id = s.id`,
     data
   );
