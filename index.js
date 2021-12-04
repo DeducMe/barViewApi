@@ -137,6 +137,11 @@ function insertMenu(sendBack, data) {
 }
 
 function postHours(sendBack, data) {
+  if (data.length === 0) {
+    sendBack("zero length", null);
+    return;
+  }
+
   const sql = `SELECT id from organizationHours WHERE organizationHours.id=${data.id}`;
   conn.query(sql, function (err, result) {
     if (result?.rows.length > 0) {
