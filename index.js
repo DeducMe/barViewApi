@@ -102,7 +102,7 @@ function postMenu(sendBack, data) {
   conn.query(sql, function (err, result) {
     if (result?.rows.length > 0) {
       console.log(`put menu`, data.id);
-      putMenu(sendBack, data.menuPositions);
+      putMenu(sendBack, data.menuPositions, data.id);
     } else {
       console.log(`insert menu`, data.id);
       insertMenu(sendBack, data.menuPositions);
@@ -110,13 +110,13 @@ function postMenu(sendBack, data) {
   });
 }
 
-function putMenu(sendBack, data) {
+function putMenu(sendBack, data, id) {
   const sql = format(
     `UPDATE organizationMenu
     SET id=s.id, category=s.category, title=s.title, image=s.image, description=s.description, price=s.price
     from(values %L)
     as s(id, category, title, image, description, price) 
-    WHERE organizationMenu.id::BIGINT = s.id::BIGINT`,
+    WHERE organizationMenu.id = ${id}`,
     data
   );
   console.log(sql);
