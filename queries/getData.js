@@ -1,4 +1,4 @@
-import { simpleQueryWithResult } from "./common";
+const { simpleQueryWithResult } = require("./common");
 
 export function getOrganizationMenu(sendBack, data, requestParams) {
   const sql = `SELECT * from organizationMenu WHERE organizationMenu.id=${requestParams.id}`;

@@ -1,4 +1,4 @@
-import { dropTable } from "./common";
+const { dropTable } = require("./common");
 
 export async function dropMenuTable() {
   const sql = `DROP TABLE organizationMenu`;
