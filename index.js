@@ -122,18 +122,19 @@ async function putMenu(sendBack, data, id) {
 }
 
 function insertMenu(sendBack, data) {
+  console.log(data);
   const sql = format(
-    `INSERT INTO organizationMenu (id, category, dishes) VALUES %L`,
+    `INSERT INTO organizationMenu (id, category, dishes) VALUES ($1, $2, $3)`,
     data
   );
 
-  conn.query(sql, function (err, result) {
-    if (err) {
-      console.log(sql, data, err);
-      return;
-    }
-    sendBack(err, result);
-  });
+  // conn.query(sql, data, function (err, result) {
+  //   if (err) {
+  //     console.log(err);
+  //     return;
+  //   }
+  //   sendBack(err, result);
+  // });
 }
 
 function postHours(sendBack, data) {
@@ -260,10 +261,11 @@ async function dropMenuDatabase() {
   const sql = `DROP TABLE organizationMenu`;
   await conn.query(sql, function (err, result) {
     if (err) {
-      if (err.errno === 1050) console.log(`table not destroyed`);
+      if (err.errno === 1050)
+        console.log(`table organizationMenu not destroyed`);
       return;
     }
-    console.log(`Table destroyed`);
+    console.log(`Table organizationMenu destroyed`);
   });
 }
 
@@ -271,10 +273,11 @@ async function dropHoursDatabase() {
   const sql = `DROP TABLE organizationHours`;
   await conn.query(sql, function (err, result) {
     if (err) {
-      if (err.errno === 1050) console.log(`table not destroyed`);
+      if (err.errno === 1050)
+        console.log(`table organizationHours not destroyed`);
       return;
     }
-    console.log(`Table destroyed`);
+    console.log(`Table organizationHours destroyed`);
   });
 }
 
@@ -282,10 +285,10 @@ async function dropDatabase() {
   const sql = `DROP TABLE organizations`;
   await conn.query(sql, function (err, result) {
     if (err) {
-      if (err.errno === 1050) console.log(`table not destroyed`);
+      if (err.errno === 1050) console.log(`table organizations not destroyed`);
       return;
     }
-    console.log(`Table destroyed`);
+    console.log(`Table organizations destroyed`);
   });
 }
 
