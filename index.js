@@ -122,19 +122,20 @@ async function putMenu(sendBack, data, id) {
 }
 
 function insertMenu(sendBack, data) {
-  console.log(data);
   const sql = format(
-    `INSERT INTO organizationMenu (id, category, dishes) VALUES ($1, $2, $3)`,
+    `INSERT INTO organizationMenu (id, category, dishes) VALUES %L`,
     data
   );
 
-  // conn.query(sql, data, function (err, result) {
-  //   if (err) {
-  //     console.log(err);
-  //     return;
-  //   }
-  //   sendBack(err, result);
-  // });
+  console.log(sql);
+
+  conn.query(sql, function (err, result) {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    sendBack(err, result);
+  });
 }
 
 function postHours(sendBack, data) {
