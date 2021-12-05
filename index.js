@@ -96,12 +96,11 @@ function getCoords(sendBack) {
   });
 }
 
-function postMenu(sendBack, data, id) {
+function postMenu(sendBack, data) {
   if (data.menuPositions.length === 0) {
     sendBack({ message: "zero length" }, null);
     return;
   }
-  console.log(id);
   const sql = `SELECT id from organizationMenu WHERE organizationMenu.id=${data.id}`;
 
   conn.query(sql, function (err, result) {
