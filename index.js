@@ -96,14 +96,12 @@ function getCoords(sendBack) {
   });
 }
 
-function postMenu(sendBack, data) {
+function postMenu(sendBack, data, id) {
   if (data.menuPositions.length === 0) {
-    console.log(data);
-
     sendBack({ message: "zero length" }, null);
     return;
   }
-
+  console.log(id);
   const sql = `SELECT id from organizationMenu WHERE organizationMenu.id=${data.id}`;
 
   conn.query(sql, function (err, result) {
@@ -240,7 +238,7 @@ async function getAllRows(sendBack) {
 }
 
 async function getAllMenu(sendBack) {
-  console.log("getAllHours");
+  console.log("getAllMenu");
   const sql = `SELECT * from organizationMenu`;
   await conn.query(sql, function (err, result) {
     if (err) {
@@ -307,7 +305,7 @@ async function connectToDatabase() {
   console.log("Connected!");
   // dropDatabase();
   // dropHoursDatabase();
-  // dropMenuDatabase();
+  dropMenuDatabase();
 
   conn.query(
     "create type s as (id BIGINT, category VARCHAR(255), title VARCHAR(255), image VARCHAR(255), description VARCHAR(255), price VARCHAR(255));",
