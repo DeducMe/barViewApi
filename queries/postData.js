@@ -6,7 +6,7 @@ const {
   resultQuery,
 } = require("./common");
 
-export function postMenu(sendBack, data) {
+exports.postMenu = (sendBack, data) => {
   async function putMenu(sendBack, data, id) {
     const sql = `DELETE FROM organizationMenu WHERE id = ${id}`;
     simpleQuery(sql);
@@ -32,9 +32,9 @@ export function postMenu(sendBack, data) {
     console.log(`insert menu`, data.id);
     insertMenu(sendBack, data.menuPositions);
   }
-}
+};
 
-export function postHours(sendBack, data) {
+exports.postHours = (sendBack, data) => {
   function putHours(sendBack, data) {
     const sqlQueryData = Object.values(data);
     const sql = `UPDATE organizationHours SET id = $1, text = $2, Everyday = $3, Monday = $4, Tuesday = $5, Wednesday = $6, Thursday = $7, Friday = $8, Saturday = $9, Sunday = $10 WHERE organizationHours.id=${data.id}`;
@@ -57,9 +57,9 @@ export function postHours(sendBack, data) {
     console.log(`insert hours`, data.id);
     insertHours(sendBack, data);
   }
-}
+};
 
-export function postOrganization(sendBack, data) {
+exports.postOrganization = (sendBack, data) => {
   function putOrganization(sendBack, data) {
     const sqlQueryData = Object.values(data).map((item) => {
       if (Array.isArray(item)) {
@@ -92,4 +92,4 @@ export function postOrganization(sendBack, data) {
     console.log(`insert org`, data.id);
     insertOrganization(sendBack, data);
   }
-}
+};

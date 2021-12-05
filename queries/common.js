@@ -1,14 +1,14 @@
 let conn;
 
-export function setGlobalConn(propConn) {
+exports.setGlobalConn = (propConn) => {
   conn = propConn;
-}
+};
 
-export function getGlobalConn() {
+exports.getGlobalConn = () => {
   return conn;
-}
+};
 
-export function reciever(req, res, func) {
+exports.reciever = (req, res, func) => {
   func(
     (err, data) => {
       if (err)
@@ -21,9 +21,9 @@ export function reciever(req, res, func) {
     req.body,
     req.params
   );
-}
+};
 
-export function createTable(sql, errLog, successLog) {
+exports.createTable = (sql, errLog, successLog) => {
   conn.query(sql, function (err, result) {
     if (err) {
       if (err.code === "42P07") console.log(errLog);
@@ -32,9 +32,9 @@ export function createTable(sql, errLog, successLog) {
     }
     console.log(successLog);
   });
-}
+};
 
-export async function dropTable(sql, errLog, successLog) {
+exports.dropTable = async (sql, errLog, successLog) => {
   await conn.query(sql, function (err, result) {
     if (err) {
       if (err.errno === 1050) console.log(errLog);
@@ -42,18 +42,18 @@ export async function dropTable(sql, errLog, successLog) {
     }
     console.log(successLog);
   });
-}
+};
 
-export function simpleQuery(sql) {
+exports.simpleQuery = (sql) => {
   conn.query(sql, function (err, result) {
     if (err) {
       console.log(err);
       return;
     }
   });
-}
+};
 
-export function simpleQueryWithResult(sql, sendBack) {
+exports.simpleQueryWithResult = (sql, sendBack) => {
   conn.query(sql, function (err, result) {
     if (err) {
       console.log(err);
@@ -61,9 +61,9 @@ export function simpleQueryWithResult(sql, sendBack) {
     }
     sendBack(err, result);
   });
-}
+};
 
-export function dataQueryWithResult(sql, sqlQueryData, sendBack) {
+exports.dataQueryWithResult = (sql, sqlQueryData, sendBack) => {
   conn.query(sql, sqlQueryData, function (err, result) {
     if (err) {
       console.log(err);
@@ -71,10 +71,10 @@ export function dataQueryWithResult(sql, sqlQueryData, sendBack) {
     }
     sendBack(err, result);
   });
-}
+};
 
-export async function resultQuery(sql) {
+exports.resultQuery = async (sql) => {
   await conn.query(sql, function (err, result) {
     return result;
   });
-}
+};
