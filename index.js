@@ -97,10 +97,6 @@ function getCoords(sendBack) {
 }
 
 function postMenu(sendBack, data) {
-  if (data.menuPositions.length === 0) {
-    sendBack({ message: "zero length" }, null);
-    return;
-  }
   const sql = `SELECT id from organizationMenu WHERE organizationMenu.id=${data.id}`;
 
   conn.query(sql, function (err, result) {
@@ -127,7 +123,7 @@ async function putMenu(sendBack, data, id) {
 
 function insertMenu(sendBack, data) {
   const sql = format(
-    `INSERT INTO organizationMenu (id, category, title, image, description, price) VALUES %L`,
+    `INSERT INTO organizationMenu (id, category, dishes) VALUES %L`,
     data
   );
 
@@ -330,7 +326,7 @@ async function connectToDatabase() {
     console.log(`Table Hours created`);
   });
 
-  const sqlOrganizationMenu = `CREATE TABLE organizationMenu (id BIGINT, category VARCHAR(255), title VARCHAR(255), image VARCHAR(255), description VARCHAR(255), price VARCHAR(255))`;
+  const sqlOrganizationMenu = `CREATE TABLE organizationMenu (id BIGINT, category VARCHAR(255), dishes TEXT)`;
   conn.query(sqlOrganizationMenu, function (err, result) {
     if (err) {
       if (err.code === "42P07") console.log(`table Menu already exist`);
