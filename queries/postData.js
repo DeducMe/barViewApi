@@ -82,7 +82,7 @@ exports.postOrganization = async (sendBack, data) => {
     dataQueryWithResult(sql, sqlQueryData, sendBack);
   }
 
-  const sql = `SELECT id from organizations WHERE id=${data.id}::bigint`;
+  const sql = `SELECT id from organizations WHERE id=${data.id}`;
   const result = await resultQuery(sql);
   console.log(result, data.id, sql);
   if (result?.rows.length > 0) {
