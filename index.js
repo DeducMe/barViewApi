@@ -71,9 +71,9 @@ async function connectToDatabase() {
   setGlobalConn(await pool.connect());
   console.log("Connected!");
 
-  // await dropMainTable();
-  // await dropHoursTable();
-  // await dropMenuTable();
+  await dropMainTable();
+  await dropHoursTable();
+  await dropMenuTable();
 
   await createOrganizationsTable();
   await createHoursTable();
