@@ -22,7 +22,7 @@ exports.postMenu = async (sendBack, data) => {
     simpleQueryWithResult(sql, sendBack);
   }
 
-  const sql = `SELECT id from organizationMenu WHERE organizationMenu.id=${data.id}`;
+  const sql = `SELECT id from organizationMenu WHERE id=${data.id}`;
   const result = await resultQuery(sql);
 
   if (result?.rows.length > 0) {
@@ -47,7 +47,7 @@ exports.postHours = async (sendBack, data) => {
     dataQueryWithResult(sql, sqlQueryData, sendBack);
   }
 
-  const sql = `SELECT id from organizationHours WHERE organizationHours.id=${data.id}`;
+  const sql = `SELECT id from organizationHours WHERE id=${data.id}`;
   const result = await resultQuery(sql);
 
   if (result?.rows.length > 0) {
@@ -82,9 +82,9 @@ exports.postOrganization = async (sendBack, data) => {
     dataQueryWithResult(sql, sqlQueryData, sendBack);
   }
 
-  const sql = `SELECT id from organizations WHERE organizations.id=${data.id}`;
+  const sql = `SELECT id from organizations WHERE id=${data.id}`;
   const result = await resultQuery(sql);
-  console.log(data);
+  console.log(result);
   if (result?.rows.length > 0) {
     console.log(`put org`, data.id);
     putOrganization(sendBack, data);
