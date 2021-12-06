@@ -84,7 +84,7 @@ exports.postOrganization = async (sendBack, data) => {
 
   const sql = `SELECT id from organizations WHERE id=${data.id}`;
   const result = await resultQuery(sql);
-  console.log(result);
+  console.log(result, data.id, sql);
   if (result?.rows.length > 0) {
     console.log(`put org`, data.id);
     putOrganization(sendBack, data);
