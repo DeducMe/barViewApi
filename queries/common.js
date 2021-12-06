@@ -73,7 +73,6 @@ exports.dataQueryWithResult = (sql, sqlQueryData, sendBack) => {
   });
 };
 
-exports.resultQuery = (sql) =>
-  conn.query(sql, function (err, result) {
-    return result;
-  });
+exports.callbackQuery = (sql, callback) => {
+  conn.query(sql, callback);
+};

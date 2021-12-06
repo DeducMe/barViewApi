@@ -3,7 +3,7 @@ const {
   simpleQueryWithResult,
   simpleQuery,
   dataQueryWithResult,
-  resultQuery,
+  callbackQuery,
 } = require("./common");
 
 exports.postMenu = async (sendBack, data) => {
@@ -23,15 +23,15 @@ exports.postMenu = async (sendBack, data) => {
   }
 
   const sql = `SELECT id from organizationMenu WHERE id=${data.id}`;
-  const result = await resultQuery(sql);
-
-  if (result?.rows.length > 0) {
-    console.log(`put menu`, data.id);
-    putMenu(sendBack, data.menuPositions, data.id);
-  } else {
-    console.log(`insert menu`, data.id);
-    insertMenu(sendBack, data.menuPositions);
-  }
+  callbackQuery(sql, function (err, result) {
+    if (result?.rows.length > 0) {
+      console.log(`put menu`, data.id);
+      putMenu(sendBack, data.menuPositions, data.id);
+    } else {
+      console.log(`insert menu`, data.id);
+      insertMenu(sendBack, data.menuPositions);
+    }
+  });
 };
 
 exports.postHours = async (sendBack, data) => {
@@ -48,15 +48,15 @@ exports.postHours = async (sendBack, data) => {
   }
 
   const sql = `SELECT id from organizationHours WHERE id=${data.id}`;
-  const result = await resultQuery(sql);
-
-  if (result?.rows.length > 0) {
-    console.log(`put hours`, data.id);
-    putHours(sendBack, data);
-  } else {
-    console.log(`insert hours`, data.id);
-    insertHours(sendBack, data);
-  }
+  callbackQuery(sql, function (err, result) {
+    if (result?.rows.length > 0) {
+      console.log(`put hours`, data.id);
+      putHours(sendBack, data);
+    } else {
+      console.log(`insert hours`, data.id);
+      insertHours(sendBack, data);
+    }
+  });
 };
 
 exports.postOrganization = async (sendBack, data) => {
@@ -83,13 +83,13 @@ exports.postOrganization = async (sendBack, data) => {
   }
 
   const sql = `SELECT id from organizations WHERE id=${data.id}`;
-  const result = resultQuery(sql);
-  console.log(result, data.id, sql);
-  if (result?.rows.length > 0) {
-    console.log(`put org`, data.id);
-    putOrganization(sendBack, data);
-  } else {
-    console.log(`insert org`, data.id);
-    insertOrganization(sendBack, data);
-  }
+  callbackQuery(sql, function (err, result) {
+    if (result?.rows.length > 0) {
+      console.log(`put org`, data.id);
+      putOrganization(sendBack, data);
+    } else {
+      console.log(`insert org`, data.id);
+      insertOrganization(sendBack, data);
+    }
+  });
 };
