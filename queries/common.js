@@ -75,6 +75,7 @@ exports.dataQueryWithResult = (sql, sqlQueryData, sendBack) => {
 
 exports.resultQuery = async (sql) => {
   return await conn.query(sql, function (err, result) {
+    console.log(result);
     return result;
   });
 };
