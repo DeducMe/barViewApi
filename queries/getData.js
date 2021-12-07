@@ -13,7 +13,7 @@ exports.getOrganizationInfo = (sendBack, data, requestParams) => {
 };
 
 exports.getCoords = (sendBack) => {
-  const sql = `SELECT coordinatesX, coordinatesY, id, name from organizations`;
+  const sql = `SELECT coordinatesX, coordinatesY, id, name, rating from organizations`;
   simpleQueryWithResult(sql, sendBack);
 };
 
